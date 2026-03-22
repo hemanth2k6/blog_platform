@@ -17,7 +17,10 @@ app.use(helmet());
 // CORS configuration (allow credentials for cookies)
 app.use(
   cors({
-    origin: '*',
+    origin: function (origin, callback) {
+      // Allow all origins dynamically to support credentials: true
+      callback(null, origin || true);
+    },
     credentials: true,
   })
 );
