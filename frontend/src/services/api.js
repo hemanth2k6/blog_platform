@@ -1,8 +1,17 @@
 import axios from 'axios';
 
+// Get the base URL from env
+let baseURL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+
+// Auto-correct: if you pasted 'https://blog.platform-817h.onrender.com' without '/api', we add it!
+if (!baseURL.endsWith('/api')) {
+  // Remove any trailing slash before adding /api
+  baseURL = baseURL.replace(/\/$/, '') + '/api';
+}
+
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:5000/api',
-  withCredentials: true, // Send cookies with requests
+  baseURL,
+  withCredentials: true, // This is equivalent to fetch's credentials: 'include' for Axios
 });
 
 // Response interceptor for generic error handling
